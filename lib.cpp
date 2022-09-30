@@ -2,6 +2,6 @@
 
 #include "version.h"
 
-int version() {
+int build() {
 	return PROJECT_VERSION_PATCH;
 }
