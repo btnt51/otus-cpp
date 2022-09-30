@@ -39,6 +39,7 @@ jobs:
           asset_path: ./helloworld-0.0.${{ github.run_number }}-Linux.deb
           asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
-      - run: sudo apt update && sudo apt install -y helloworld-0.0.${{ github.run_number }}-Linux.deb
+          
+      - run: sudo apt update && sudo apt install -y /home/runner/work/otus-cpp/otus-cpp/helloworld-0.0.${{ github.run_number }}-Linux.deb
       - run: helloworld_cli
 
