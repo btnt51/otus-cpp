@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - feature/github_actions
+      - hw-1
 
 jobs:
   build:
