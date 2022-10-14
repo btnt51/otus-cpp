@@ -16,16 +16,17 @@ jobs:
           submodules: true
       - name: Prepare machine
         run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
-      - name: Build phase
+      - name: Setting up Cmake
+        run: cmake . -DPATCH_VERSION=${{ github.run_number }} -DWITH_GOOGLE_TEST=ON
+      - name: Building project
+        run: cmake --build .
+      - name: Creating and Run tests
         run: |
-        cmake . -DPATCH_VERSION=${{ github.run_number }} -DWITH_GOOGLE_TEST=ON
-        cmake --build .
-        cmake --build . --target test
-        cmake --build . --target package
-      - name: Run tests
-        run: |
-        ./google_tests
-        cat ip_filter.tsv | ./ip_filter | md5sum
+          cmake --build . --target test
+          ./google_tests
+          cat ip_filter.tsv | ./ip_filter | md5sum
+      - name: Building package
+        run: cmake --build . --target package
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
