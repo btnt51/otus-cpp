@@ -8,7 +8,7 @@ option(WITH_GOOGLE_TEST "Whether to build Google test" ON)
 project(ipfilter_lib VERSION ${PROJECT_VESRION})
 
 
-add_executable(ipfilter main.cpp)
+add_executable(ip_filter main.cpp)
 
 add_library(ipfilter_lib ipfilter.cpp)
 
@@ -34,12 +34,12 @@ target_include_directories(ipfilter_lib
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
 
-target_link_libraries(ipfilter PRIVATE
+target_link_libraries(ip_filter PRIVATE
     ipfilter_lib
 )
 
 target_compile_features(ipfilter_lib PUBLIC cxx_std_17)
-target_compile_features(ipfilter PUBLIC cxx_std_17)
+target_compile_features(ip_filter PUBLIC cxx_std_17)
 
 set_target_properties(ipfilter_lib PROPERTIES
     CXX_STANDARD 17
@@ -60,7 +60,7 @@ if(WITH_GOOGLE_TEST)
 endif()
 
 if (MSVC)
-    target_compile_options(ipfilter PRIVATE
+    target_compile_options(ip_filter PRIVATE
         /W4
     )
     target_compile_options(ipfilter_lib PRIVATE
@@ -72,7 +72,7 @@ if (MSVC)
         )
     endif()
 else ()
-    target_compile_options(ipfilter PRIVATE
+    target_compile_options(ip_filter PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(ipfilter_lib PRIVATE
@@ -85,7 +85,7 @@ else ()
     endif()
 endif()
 
-install(TARGETS ipfilter RUNTIME DESTINATION bin)
+install(TARGETS ip_filter RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
