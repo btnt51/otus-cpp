@@ -64,8 +64,6 @@ std::string helpFunc(int a) {
 
 
 
-
-
 std::vector<std::vector<std::string> > filter_any(const std::vector<std::vector<std::string> > &inVec, int num) {
     std::vector<std::vector<std::string> > result;
     auto byte = helpFunc(num);
