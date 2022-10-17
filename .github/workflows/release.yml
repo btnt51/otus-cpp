@@ -30,7 +30,7 @@ jobs:
           name: Release ${{ github.run_number }}
       - name: Execute program on linux
         run: |
-          sudo apt install -y ~/${{ github.event.repository.name }}/build/releae/ipfilter_lib-0.0.${{ github.run_number }}-Linux.deb
+          sudo apt install -y ~/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/releae/ipfilter_lib-0.0.${{ github.run_number }}-Linux.deb
           cat ip_filter.tsv | ip_filter | md5sum
   
   build-macos:
