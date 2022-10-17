@@ -21,6 +21,10 @@ jobs:
         run: ./build.sh ${{ github.run_number }} ON test
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package
+      - name: Execute program on linux
+        run: |
+          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/ipfilter_lib-0.0.${{ github.run_number }}-Linux.deb
+          cat ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/ip_filter.tsv | ip_filter | md5sum
       - name: Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
@@ -28,11 +32,7 @@ jobs:
           files: build/release/*
           tag_name: ${{ github.run_number }}
           name: Release ${{ github.run_number }}
-      - name: Execute program on linux
-        run: |
-          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/ipfilter_lib-0.0.${{ github.run_number }}-Linux.deb
-          cat ip_filter.tsv | ip_filter | md5sum
-  
+
   build-macos:
     name: Build on MacOS
     runs-on: macos-latest
