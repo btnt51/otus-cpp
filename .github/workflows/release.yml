@@ -47,7 +47,7 @@ jobs:
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package
       - name: Release
-        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
         with:
           files: build/release/*
           tag_name: ${{ github.run_number }}
