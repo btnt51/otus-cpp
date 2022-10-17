@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
-option(WITH_GOOGLE_TEST "Whether to build Google test" ON)
 
 project(ipfilter_lib VERSION ${PROJECT_VESRION})
 
@@ -47,7 +46,7 @@ set_target_properties(ipfilter_lib PROPERTIES
     CXX_EXTENSIONS ON
 )
 
-if(WITH_GOOGLE_TEST)
+if(BUILDING_TESTS)
     add_executable(google_tests tests.cpp)
     add_subdirectory(googletest)
     set_target_properties(google_tests PROPERTIES
@@ -66,7 +65,7 @@ if (MSVC)
     target_compile_options(ipfilter_lib PRIVATE
         /W4
     )
-    if(WITH_GOOGLE_TEST)
+    if(BUILDING_TESTS)
         target_compile_options(google_tests PRIVATE
             /W4
         )
@@ -78,7 +77,7 @@ else ()
     target_compile_options(ipfilter_lib PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
-    if(WITH_GOOGLE_TEST)
+    if(BUILDING_TESTS)
         target_compile_options(google_tests PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
@@ -87,14 +86,18 @@ endif()
 
 install(TARGETS ip_filter RUNTIME DESTINATION bin)
 
-set(CPACK_GENERATOR DEB)
-set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
-set(CPACK_PACKAGE_CONTACT evgeniy@btnt51.ru)
+if (APPLE)
+    message("Packing for MacOS")
+    set(CPACK_GENERATOR DragNDrop)
+elseif (UNIX)
+    message("Packing for Debian distros")
+    set(CPACK_GENERATOR DEB)
+    set(CPACK_PACKAGE_CONTACT evgeniy@btnt51.ru)
+endif ()
+set(CPACK_OUTPUT_FILE_PREFIX release)
 include(CPack)
 
-if(WITH_GOOGLE_TEST)
+if(BUILDING_TESTS)
     enable_testing()
     add_test(google_tests google_tests)
 endif()
