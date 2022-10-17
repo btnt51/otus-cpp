@@ -30,7 +30,7 @@ jobs:
           name: Release ${{ github.run_number }}
       - name: Execute program on linux
         run: |
-          sudo apt install -y build/releae/ip_filter-0.0.${{ github.run_number }}-Linux.deb
+          sudo apt install -y build/releae/ipfilter_lib0.0.${{ github.run_number }}-Linux.deb
           cat ip_filter.tsv | ip_filter | md5sum
   
   build-macos:
@@ -39,6 +39,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Prepare build.sh
         run: chmod +x build.sh
       - name: Test
