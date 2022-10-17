@@ -1,11 +1,5 @@
 #include "ipfilter.hpp"
 
-// ("",  '.') -> [""]
-// ("11", '.') -> ["11"]
-// ("..", '.') -> ["", "", ""]
-// ("11.", '.') -> ["11", ""]
-// (".11", '.') -> ["", "11"]
-// ("11.22", '.') -> ["11", "22"]
 std::vector<std::string> split(const std::string &str, char d) {
     std::vector<std::string> r;
 
@@ -61,7 +55,6 @@ void print(const std::vector<std::vector<std::string> > &inVec) {
 std::string helpFunc(int a) {
     return std::to_string(a);
 }
-
 
 
 std::vector<std::vector<std::string> > filter_any(const std::vector<std::vector<std::string> > &inVec, int num) {

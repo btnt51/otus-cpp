@@ -18,8 +18,9 @@ std::vector<std::vector<std::string> > filter_any(const std::vector<std::vector<
 
 void print(const std::vector<std::vector<std::string> > &inVec);
 
-template<typename...I>
-std::vector<std::vector<std::string> > filter(const std::vector<std::vector<std::string> > &inVec, I...Bytes){
+template<typename...T>
+std::vector<std::vector<std::string> > filter(const std::vector<std::vector<std::string> > &inVec, T...Bytes)
+{
     std::vector<std::vector<std::string> > result;
     std::vector<int> bytes = {{Bytes...}};
     if(bytes.size() == 1) {
@@ -44,4 +45,3 @@ std::vector<std::vector<std::string> > filter(const std::vector<std::vector<std:
     }
     return result;
 }
-
