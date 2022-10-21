@@ -1,4 +1,4 @@
-#include "ipfilter.hpp"
+#include "../include/ipfilter.hpp"
 
 std::vector<std::string> split(const std::string &str, char d) {
     std::vector<std::string> r;
@@ -36,6 +36,12 @@ std::vector<std::vector<std::string> > sort(const std::vector<std::vector<std::s
     return result;
 }
 
+std::vector<ipAddress> sort(const std::vector<ipAddress> &inVec) {
+    std::vector<ipAddress> result = inVec;
+    std::sort(result.rbegin(), result.rend());
+    return result;
+}
+
 
 void print(const std::vector<std::vector<std::string> > &inVec) {
     for(std::vector<std::vector<std::string> >::const_iterator ip = inVec.cbegin(); ip != inVec.cend(); ++ip) {
@@ -52,6 +58,11 @@ void print(const std::vector<std::vector<std::string> > &inVec) {
     }
 }
 
+void print(const std::vector<ipAddress> &inVec) {
+    for(std::vector<ipAddress >::const_iterator ip = inVec.cbegin(); ip != inVec.cend(); ++ip)
+        std::cout << *ip << std::endl;
+}
+
 std::string helpFunc(int a) {
     return std::to_string(a);
 }
@@ -63,6 +74,18 @@ std::vector<std::vector<std::string> > filter_any(const std::vector<std::vector<
     std::copy_if(inVec.begin(), inVec.end(), std::back_inserter(result), [&byte](auto ip){
         for(auto ipPart : ip) {
             if(ipPart == byte)
+                return true;
+        }
+        return false;
+    });
+    return result;
+}
+
+std::vector<ipAddress > filter_any(const std::vector<ipAddress > &inVec, int num) {
+    std::vector<ipAddress > result;
+    std::copy_if(inVec.begin(), inVec.end(), std::back_inserter(result), [&num](auto ip){
+        for(auto i = 0; i < 4; ++i) {
+            if(ip.at(i) == num)
                 return true;
         }
         return false;
