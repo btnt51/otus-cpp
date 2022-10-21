@@ -1,6 +1,6 @@
 #include <fstream>
 #include "../include/ipfilter.hpp"
-#include "googletest/googletest/include/gtest/gtest.h"
+#include <gtest/gtest.h>
 
 
 

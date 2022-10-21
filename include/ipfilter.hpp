@@ -57,7 +57,7 @@ std::vector<std::vector<std::string> > filter(const std::vector<std::vector<std:
 
 
 template<typename...T>
-std::vector<ipAddress> filter(const std::vector<ipAddress > &inVec, T...Bytes)
+std::vector<ipAddress> filter(const std::vector<ipAddress> &inVec, T...Bytes)
 {
     std::vector<ipAddress> result;
     std::vector<int> bytes = {{Bytes...}};

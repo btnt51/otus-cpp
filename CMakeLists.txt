@@ -14,8 +14,7 @@ add_library(ipfilter_lib src/ipfilter.cpp)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/ip_filter.tsv
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data_tests
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/tests)
+
 
 target_include_directories(ipfilter_lib
     PRIVATE "${CMAKE_BINARY_DIR}"
@@ -35,15 +34,24 @@ set_target_properties(ipfilter_lib PROPERTIES
 )
 
 if(BUILDING_TESTS)
-    add_executable(google_tests tests/filters.cpp tests/ipAddress.cpp tests/sort.cpp tests/split.cpp)
-    add_subdirectory(googletest)
-    set_target_properties(google_tests PROPERTIES
-        CXX_STANDARD 17
-        CXX_STANDARD_REQUIRED ON
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG release-1.12.1
     )
-    
-    target_link_libraries(google_tests gtest_main ipfilter_lib)
+    FetchContent_MakeAvailable(googletest)
 
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data_tests
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    
+    add_executable(${PROJECT_NAME}_test  tests/split.cpp tests/ipAddress.cpp tests/sort.cpp  tests/filters.cpp)
+    target_compile_features(${PROJECT_NAME}_test PUBLIC cxx_std_17)
+    target_link_libraries(${PROJECT_NAME}_test GTest::gtest_main ${PROJECT_NAME})
+    target_include_directories(${PROJECT_NAME}_test PRIVATE include)
+
+    include(GoogleTest)
+    gtest_discover_tests(${PROJECT_NAME}_test)
 endif()
 
 if (MSVC)
@@ -54,7 +62,7 @@ if (MSVC)
         /W4
     )
     if(BUILDING_TESTS)
-        target_compile_options(google_tests PRIVATE
+        target_compile_options(${PROJECT_NAME}_test PRIVATE
             /W4
         )
     endif()
@@ -66,7 +74,7 @@ else ()
         -Wall -Wextra -pedantic -Werror
     )
     if(BUILDING_TESTS)
-        target_compile_options(google_tests PRIVATE
+        target_compile_options(${PROJECT_NAME}_test PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
     endif()
@@ -84,8 +92,3 @@ elseif (UNIX)
 endif ()
 set(CPACK_OUTPUT_FILE_PREFIX release)
 include(CPack)
-
-if(BUILDING_TESTS)
-    enable_testing()
-    add_test(google_tests google_tests)
-endif()

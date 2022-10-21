@@ -11,8 +11,9 @@
 class ipAddress {
 public:
     ipAddress() = delete;
+
     ipAddress(std::vector<std::string> ipAddressInString) {
-        assert(ipAddressInString.size() != 4);
+       // assert(ipAddressInString.size() != 4);
         for(auto i = 0; i < 4; ++i) {
             _Bytes[i] = std::stoi(ipAddressInString.at(i));
         }
@@ -39,8 +40,12 @@ public:
         return leftAddress._Bytes < rightAddress._Bytes;
     }
 
+    friend inline bool operator== (const ipAddress &leftAddress, const ipAddress &rightAddress) {
+        return leftAddress._Bytes == rightAddress._Bytes;
+    }
+
     int at(size_t num) {
-        assert(num > 3);
+        //assert(num > 3);
         return _Bytes.at(num);
     }
 

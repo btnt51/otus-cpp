@@ -1,6 +1,6 @@
 #include <fstream>
 #include "../include/ipfilter.hpp"
-#include "googletest/googletest/include/gtest/gtest.h"
+#include <gtest/gtest.h>
 
 
 
@@ -13,7 +13,7 @@ TEST(filters, old_filter_1_with_strings)
         std::vector<std::string> v = split(line, '\t');
         ip_pool.push_back(split(v.at(0), '.'));
     }
-    std::ifstream ifsorted("tests/filter_1.tsv");
+    std::ifstream ifsorted("data_tests/filter_1.tsv");
     std::vector<std::vector<std::string> > filterRes;
     for(std::string line; std::getline(ifsorted, line);)
     {
@@ -33,7 +33,7 @@ TEST(filters, old_filter_46_70_with_strings)
         std::vector<std::string> v = split(line, '\t');
         ip_pool.push_back(split(v.at(0), '.'));
     }
-    std::ifstream ifsorted("tests/filter_46_70.tsv");
+    std::ifstream ifsorted("data_tests/filter_46_70.tsv");
     std::vector<std::vector<std::string> > filterRes;
     for(std::string line; std::getline(ifsorted, line);)
     {
@@ -52,7 +52,7 @@ TEST(filters, old_filter_any_46_with_string)
         std::vector<std::string> v = split(line, '\t');
         ip_pool.push_back(split(v.at(0), '.'));
     }
-    std::ifstream ifsorted("tests/filter_any_46.tsv");
+    std::ifstream ifsorted("data_tests/filter_any_46.tsv");
     std::vector<std::vector<std::string> > filterRes;
     for(std::string line; std::getline(ifsorted, line);)
     {
@@ -73,12 +73,11 @@ TEST(filter, new_filter_1_with_ipAddress)
         std::vector<std::string> v = split(line, '\t');
         ip_pool.push_back(ipAddress(split(v.at(0), '.')));
     }
-    std::ifstream ifsorted("tests/filter_1.tsv");
+    std::ifstream ifsorted("data_tests/filter_1.tsv");
     std::vector<ipAddress> filterRes;
-    for(std::string line; std::getline(ifs, line);)
+    for(std::string line; std::getline(ifsorted, line);)
     {
-        std::vector<std::string> v = split(line, '\t');
-        filterRes.push_back(ipAddress(split(v.at(0), '.')));
+        filterRes.push_back(ipAddress(split(line, '.')));
     }
     ip_pool = sort(ip_pool);
 
@@ -94,12 +93,11 @@ TEST(filter, new_filter_46_70_with_ipAddress)
         std::vector<std::string> v = split(line, '\t');
         ip_pool.push_back(ipAddress(split(v.at(0), '.')));
     }
-    std::ifstream ifsorted("tests/filter_46_70.tsv");
+    std::ifstream ifsorted("data_tests/filter_46_70.tsv");
     std::vector<ipAddress> filterRes;
-    for(std::string line; std::getline(ifs, line);)
+    for(std::string line; std::getline(ifsorted, line);)
     {
-        std::vector<std::string> v = split(line, '\t');
-        filterRes.push_back(ipAddress(split(v.at(0), '.')));
+        filterRes.push_back(ipAddress(split(line, '.')));
     }
     ip_pool = sort(ip_pool);
     EXPECT_EQ(filter(ip_pool, 46, 70), filterRes);
@@ -114,12 +112,11 @@ TEST(filter, new_filter_any_46_with_ipAddress)
         std::vector<std::string> v = split(line, '\t');
         ip_pool.push_back(ipAddress(split(v.at(0), '.')));
     }
-    std::ifstream ifsorted("tests/filter_any_46.tsv");
+    std::ifstream ifsorted("data_tests/filter_any_46.tsv");
     std::vector<ipAddress> filterRes;
-    for(std::string line; std::getline(ifs, line);)
+    for(std::string line; std::getline(ifsorted, line);)
     {
-        std::vector<std::string> v = split(line, '\t');
-        filterRes.push_back(ipAddress(split(v.at(0), '.')));
+        filterRes.push_back(ipAddress(split(line, '.')));
     }
     ip_pool = sort(ip_pool);
     EXPECT_EQ(filter_any(ip_pool, 46), filterRes);

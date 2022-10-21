@@ -81,8 +81,8 @@ std::vector<std::vector<std::string> > filter_any(const std::vector<std::vector<
     return result;
 }
 
-std::vector<ipAddress > filter_any(const std::vector<ipAddress > &inVec, int num) {
-    std::vector<ipAddress > result;
+std::vector<ipAddress> filter_any(const std::vector<ipAddress > &inVec, int num) {
+    std::vector<ipAddress> result;
     std::copy_if(inVec.begin(), inVec.end(), std::back_inserter(result), [&num](auto ip){
         for(auto i = 0; i < 4; ++i) {
             if(ip.at(i) == num)

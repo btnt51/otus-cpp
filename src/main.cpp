@@ -4,7 +4,7 @@ int main(void)
 {
     try
     {
-		std::vector<std::vector<std::string> > ip_pool;
+		std::vector<ipAddress > ip_pool;
 
         for(std::string line; std::getline(std::cin, line);)
         {
@@ -14,7 +14,7 @@ int main(void)
 
         ip_pool = sort(ip_pool);
 		print(ip_pool);
-		std::vector<std::vector<std::string> > ip;
+		std::vector<ipAddress> ip;
 		ip = filter(ip_pool, 1);
 		print(ip);
         ip.clear();
