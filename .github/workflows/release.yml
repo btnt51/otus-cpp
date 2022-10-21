@@ -43,7 +43,7 @@ jobs:
       - name: Prepare build.sh
         run: chmod +x build.sh
       - name: Test
-        run: ./build.sh ${{ github.run_number }} ON test
+        run: ./build.sh ${{ github.run_number }} ON ipfilter_lib_test
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package
       - name: Release
