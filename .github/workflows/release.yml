@@ -4,37 +4,51 @@ on:
   push:
     branches:
       - master
-      - feature/github_actions
+      - hw-*
 
 jobs:
-  build:
+  build-ubuntu:
+    name: Build on Ubuntu
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           submodules: true
-      - run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
-      - run: cmake . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
-      - run: cmake --build .
-      - run: cmake --build . --target test
-      - run: cmake --build . --target package
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare build.sh
+        run: chmod +x build.sh
+      - name: Test
+        run: ./build.sh ${{ github.run_number }} ON test
+      - name: Build
+        run: ./build.sh ${{ github.run_number }} OFF package
+      - name: Execute program on linux
+        run: |
+          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/******-0.0.${{ github.run_number }}-Linux.deb
+          ***** 
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
+          files: build/release/*
           tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: Release ${{ github.run_number }}
+
+  build-macos:
+    name: Build on MacOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./helloworld-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
-          asset_content_type: application/vnd.debian.binary-package
+          submodules: true
+      - name: Prepare build.sh
+        run: chmod +x build.sh
+      - name: Test
+        run: ./build.sh ${{ github.run_number }} ON ipfilter_lib_test
+      - name: Build
+        run: ./build.sh ${{ github.run_number }} OFF package
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/release/*
+          tag_name: ${{ github.run_number }}
+          name: Release ${{ github.run_number }}
