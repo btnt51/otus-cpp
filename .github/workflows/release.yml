@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - hw-*
+      - hw-3
 
 jobs:
   build-ubuntu:
@@ -23,8 +23,8 @@ jobs:
         run: ./build.sh ${{ github.run_number }} OFF package
       - name: Execute program on linux
         run: |
-          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/******-0.0.${{ github.run_number }}-Linux.deb
-          ***** 
+          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/allacator-0.0.${{ github.run_number }}-Linux.deb
+          allacator
       - name: Release
         uses: softprops/action-gh-release@v1
         with:

@@ -3,14 +3,13 @@ cmake_minimum_required(VERSION 3.12)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
-#set(PROJECT_NAME )
 
-project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
+project(allacator VERSION ${PROJECT_VESRION})
 
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-add_library(${PROJECT_NAME}_lib src/.cpp)
+add_library(${PROJECT_NAME}_lib src/fact.cpp)
 
 
 target_include_directories(${PROJECT_NAME}_lib
@@ -24,7 +23,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 target_compile_features(${PROJECT_NAME}_lib PUBLIC cxx_std_17)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-set_target_properties(${PROJECT_NAME}_lib PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS ON
@@ -40,7 +39,7 @@ if(WITH_TESTS)
     FetchContent_MakeAvailable(googletest)
 
     
-    add_executable(${PROJECT_NAME}_test  tests/split.cpp tests/ipAddress.cpp tests/sort.cpp  tests/filters.cpp)
+    add_executable(${PROJECT_NAME}_test  )
     target_compile_features(${PROJECT_NAME}_test PUBLIC cxx_std_17)
     target_link_libraries(${PROJECT_NAME}_test GTest::gtest_main ${PROJECT_NAME})
     target_include_directories(${PROJECT_NAME}_test PRIVATE include)
