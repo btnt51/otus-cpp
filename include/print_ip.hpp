@@ -73,7 +73,7 @@ utility::enable_nums_t<T> print_ip(T num) {
 template<template <typename, typename> typename Container, typename T, typename Alloc=std::allocator<T>>
 utility::enabale_containers_t<Container, T, Alloc> print_ip(Container<T, Alloc> container) {
     for(auto it = container.begin(); it != container.end(); it++) {
-        if(std::distance(container.begin(), it) == container.size()-1)
+        if(static_cast<long unsigned int>(std::distance(container.begin(), it)) == container.size()-1)
             break;
         std::cout << *it << ".";
     }
