@@ -81,9 +81,9 @@ public:
     }
 
     void emplace(const T &value) {
-        if(auto node = this->_alloc.allocate(1)) {
+        if(auto node = std::allocator_traits<Allocator>::allocate(_alloc, 1)) {
             this->_size++;
-            this->_alloc.construct(node, value);
+            std::allocator_traits<Allocator>::construct(_alloc, node, value);
             if(_head) {
                 _tail->_next = node;
             } else {
@@ -103,10 +103,8 @@ public:
     void clear() {
         if(this->_head) {
             auto next = this->_head->_next;
-            
-            this->_alloc.destroy(_head);
-            
-            this->_alloc.deallocate(_head, 1);
+            std::allocator_traits<Allocator>::destroy(_alloc, _head);
+            std::allocator_traits<Allocator>::deallocate(_alloc, _head, 1);
             _head = next;
         }
         this->_size = 0;
