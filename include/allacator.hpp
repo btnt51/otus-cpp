@@ -5,14 +5,22 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <array>
+#include <map>
 
 #define DEBUG_MSG 1
 
 int factorial(int num);
 
-template<typename T, std::size_t N >
-class Basic_Allocator
+
+
+template<class T, std::size_t Num = 10, bool isExtendable = false>
+class ownAllocator
 {
+private:
+    T *ptr = nullptr;
+    T *ptr_head = nullptr;
+
 public:
     using value_type = T;
     using pointer = T *;
@@ -23,165 +31,62 @@ public:
     using void_pointer = void *;
     using size_type = std::size_t;
 
-    template<typename U>
-    class rebind{
-    public:
-        using other = Basic_Allocator<U, N>;
-    };
-
-    Basic_Allocator() {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-#endif
-        memoryPointer = allocate(N);
+    ownAllocator() noexcept {
+        if (Num)
+            allocate(Num);
     }
 
-    ~Basic_Allocator() {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-#endif
-        deallocate(memoryPointer, N);
-    }
+    explicit ownAllocator(int ) noexcept {}
 
-    T* allocate(std::size_t n) {
-        if(!memoryPointer) {
-            auto * pointer = std::malloc(sizeof(T) * N);
-#ifdef DEBUG_MSG
-            std::cout << __PRETTY_FUNCTION__ << "[n = " << n << "]" << std::endl;
-#endif     
-            return reinterpret_cast<T *>(pointer);
-        }
+    template<typename X>
+    explicit ownAllocator(const ownAllocator<X> ) noexcept {}
 
-        if(n > N)
-            throw std::bad_alloc();
-        return memoryPointer;
-    }
-
-    void deallocate(T* pointer, std::size_t) {
-        if(!pointer)
-            std::free(pointer);
-    }
-
-    template<typename U, typename ...Args>
-    void construct(U *pointer,Args &&...args) {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-        std::cout << __PRETTY_FUNCTION__ << "pointer= " << pointer << std::endl;
-#endif
-        new(pointer) U(std::forward<Args>(args)...);
+    ~ownAllocator() {
+        if(!ptr)
+            ::operator delete(ptr);
+        ptr = nullptr;
     } 
 
-protected:
-    T *memoryPointer = nullptr;
-};
-
-
-template <typename T, size_t N = 2>
-class Extended_Allocator{
-public:
-
-    using value_type = T;
-    using pointer = T *;
-    using const_pointer = const T *;
-    using const_void_pointer = const void *;
-    using reference = T &;
-    using const_referenc = const T &;
-    using void_pointer = void *;
-    using size_type = std::size_t;
-
-    template<typename U>
-    class rebind{
-    public:
-        using other = Extended_Allocator<U, N>;
-    };
-
-    Extended_Allocator() {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-#endif
-        memoryPointer = allocate(N+1);
-    }
-
-    ~Extended_Allocator() {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-#endif
-        /* for(size_t i = 0; i < N*sizeof(T); i += sizeof(T)) {
-            destroy(memoryPointer+i);
-        } */
-        deallocate(memoryPointer, N);
-    }
-
-    T* allocate(std::size_t n){
-        if(n > N) {
-            std::free(memoryPointer);
-            memoryPointer = static_cast<T*>(std::malloc(sizeof(T) * (N*sizeof(T))));
-            if(!memoryPointer)
+    T *allocate(std::size_t n) {
+        if (!ptr_head) {
+            if(n > Num && !isExtendable)
                 throw std::bad_alloc();
-            
-#ifdef DEBUG_MSG
-            std::cout << __PRETTY_FUNCTION__ << "[N*n = " << (n*N)/2 << "]" << std::endl;
-            std::cout << __PRETTY_FUNCTION__ << "pointer size= " << sizeof(this->memoryPointer) << std::endl;
-#endif  
+            ptr = reinterpret_cast<T *>(::operator new(n * sizeof(T)));
+            if (!ptr)
+                throw std::bad_alloc();
+            ptr_head = ptr;
+            return ptr;
+        } else {
+            return ptr++;
         }
-       // std::cout << __PRETTY_FUNCTION__ << "[n = " << n << "]" << std::endl;
-        if(!memoryPointer)
-            throw std::bad_alloc();
-        
-        return reinterpret_cast<T *>(memoryPointer); 
     }
 
-    template<typename U>
-    void destroy(U *pointer) {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-#endif
-        pointer->~U();
+    void reserve(std::size_t size) {
+        if (size)
+            allocate(size);
     }
 
-    void deallocate(T* pointer, std::size_t) {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-#endif
-        if(!pointer)
-            std::free(pointer);
+    template<class U>
+    struct rebind {
+        typedef ownAllocator<U> other;
+    };
+
+    void deallocate(T *p, std::size_t) {
+        if (p == ptr_head) {// if there's not a pool, nothing to do
+            ::operator delete(ptr_head);
+            ptr_head = nullptr;
+        }
     }
 
-    template<typename U, typename ...Args>
-    void construct(U *pointer, Args &&...args) {
-#ifdef DEBUG_MSG
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-        std::cout << __PRETTY_FUNCTION__ << "pointer= " << pointer << std::endl;
-#endif
-        new(pointer) U(std::forward<Args>(args)...);
-    } 
+    template<typename U, typename ... Args>
+    void construct(U *p, Args &&... args) {
+        new(p) U(std::forward<Args>(args)...);
+    }
 
-protected:
-    T *memoryPointer = nullptr;
-
+    void destroy(T *p) {
+        p->~T();
+    }
 };
-
-
-template<typename T, std::size_t NUM, bool isExtendable>
-class myPool {
-public:
-
-
-private:
-    
-
-};
-
-template<typename T, size_t Num = 2>
-class AllocatorWithPull{
-public:
-
-
-private:
-    static MyPool Pool;
-
-};
-
 
 
 #endif
