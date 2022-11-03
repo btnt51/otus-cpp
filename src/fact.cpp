@@ -1,7 +1,7 @@
-#include "../include/allacator.hpp"
+#include "../include/allocator.hpp"
 
 
-int factorial(int num) {
+long factorial(long num) {
     if(num == 0)
         return 1;
     return num * factorial(num-1);

@@ -1,7 +1,18 @@
 #include <iostream>
-#include "../include/allacator.hpp"
+#include "../include/allocator.hpp"
+#include "../include/ownlist.hpp"
 
 int main(int, char **) {
+	auto list = ownList<long>{}; 
+    for(int i = 0; i < 10; ++i){
+        list.emplace(factorial(i));
+    }
+
+
+    for(auto it = list.begin(); it != list.end(); ++it) {
+        std::cout << *it << "\n"; 
+	}
+
 	try {
 		std::cout << "MAP 1" << std::endl;
 		auto map1 = std::map<int, int>{};
@@ -28,7 +39,7 @@ int main(int, char **) {
 		
 		for(auto &el : map2) {
 			std::cout << el.first << " " << el.second << std::endl;
-		} 
+		}  
 	}
 	catch(std::bad_alloc &ba) {
 		std::cerr << ba.what() << std::endl;

@@ -42,7 +42,7 @@ if(WITH_TESTS)
     FetchContent_MakeAvailable(googletest)
 
     
-    add_executable(test  )
+    add_executable(test  tests/allocator_test.cpp tests/own_list_test.cpp)
     target_compile_features(test PUBLIC cxx_std_17)
     target_link_libraries(test GTest::gtest_main ${PROJECT_NAME}_lib)
     target_include_directories(test PRIVATE include)
@@ -66,12 +66,12 @@ if (MSVC)
         )
     endif()
 else ()
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
+    #target_compile_options(${PROJECT_NAME} PRIVATE
+    #    -Wall -Wextra -pedantic -Werror
+    #)
     if(HasLib)
         target_compile_options(${PROJECT_NAME}_lib PRIVATE
-            -Wall -Wextra -pedantic -Werror
+           -Wall -Wextra -pedantic -Werror
         )
     endif()
     if(BUILDING_TESTS)

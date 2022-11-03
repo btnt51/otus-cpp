@@ -10,7 +10,7 @@
 
 #define DEBUG_MSG 1
 
-int factorial(int num);
+long factorial(long num);
 
 
 
@@ -18,8 +18,8 @@ template<class T, std::size_t Num = 10, bool isExtendable = false>
 class ownAllocator
 {
 private:
-    T *ptr = nullptr;
-    T *ptr_head = nullptr;
+    T *_pointer = nullptr;
+    T *_pointer_head = nullptr;
 
 public:
     using value_type = T;
@@ -36,28 +36,28 @@ public:
             allocate(Num);
     }
 
-    explicit ownAllocator(int ) noexcept {}
+    explicit ownAllocator(int) noexcept {}
 
     template<typename X>
     explicit ownAllocator(const ownAllocator<X> ) noexcept {}
 
     ~ownAllocator() {
-        if(!ptr)
-            ::operator delete(ptr);
-        ptr = nullptr;
+        if(!_pointer)
+            ::operator delete(_pointer);
+        _pointer = nullptr;
     } 
 
     T *allocate(std::size_t n) {
-        if (!ptr_head) {
+        if (!_pointer_head) {
             if(n > Num && !isExtendable)
                 throw std::bad_alloc();
-            ptr = reinterpret_cast<T *>(::operator new(n * sizeof(T)));
-            if (!ptr)
+            _pointer = reinterpret_cast<T *>(::operator new(n * sizeof(T)));
+            if (!_pointer)
                 throw std::bad_alloc();
-            ptr_head = ptr;
-            return ptr;
+            _pointer_head = _pointer;
+            return _pointer;
         } else {
-            return ptr++;
+            return _pointer++;
         }
     }
 
@@ -68,23 +68,23 @@ public:
 
     template<class U>
     struct rebind {
-        typedef ownAllocator<U> other;
+        using other = ownAllocator<U, Num, isExtendable>;
     };
 
-    void deallocate(T *p, std::size_t) {
-        if (p == ptr_head) {// if there's not a pool, nothing to do
-            ::operator delete(ptr_head);
-            ptr_head = nullptr;
+    void deallocate(T *pointer, std::size_t) {
+        if (pointer == _pointer_head) {// if there's not a pool, nothing to do
+            ::operator delete(_pointer_head);
+            _pointer_head = nullptr;
         }
     }
 
     template<typename U, typename ... Args>
-    void construct(U *p, Args &&... args) {
-        new(p) U(std::forward<Args>(args)...);
+    void construct(U *pointer, Args &&... args) {
+        new(pointer) U(std::forward<Args>(args)...);
     }
 
-    void destroy(T *p) {
-        p->~T();
+    void destroy(T *pointer) {
+        pointer->~T();
     }
 };
 
