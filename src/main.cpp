@@ -19,7 +19,7 @@ int main(int, char **) {
 			int,
 			int,
 			std::less<int>,
-			custom_allocator<std::pair<
+			ownAllocator<std::pair<
 					const int, int>, 10> >{};
 
 		for(auto i = 0; i < 10; ++i) {
@@ -29,8 +29,6 @@ int main(int, char **) {
 		for(auto &el : map2) {
 			std::cout << el.first << " " << el.second << std::endl;
 		} 
-
-	
 	}
 	catch(std::bad_alloc &ba) {
 		std::cerr << ba.what() << std::endl;
