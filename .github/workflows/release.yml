@@ -24,7 +24,7 @@ jobs:
       - name: Execute program on linux
         run: |
           sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/allocator-0.0.${{ github.run_number }}-Linux.deb
-          allacator
+          allocator
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
