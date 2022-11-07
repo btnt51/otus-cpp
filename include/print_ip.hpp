@@ -1,6 +1,6 @@
 /**
     \file
-    \mainpage Homework 3
+    \mainpage Homework 4
 	\brief Homework 
 	\author btnt51
 	\date October 2022
