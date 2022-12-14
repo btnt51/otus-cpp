@@ -3,32 +3,22 @@ cmake_minimum_required(VERSION 3.12)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
-#set(PROJECT_NAME )
+set(PROJECT_NAME Editor)
 
 project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
 
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-add_library(${PROJECT_NAME}_lib src/.cpp)
-
-
-target_include_directories(${PROJECT_NAME}_lib
-    PRIVATE "${CMAKE_BINARY_DIR}"
-)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${PROJECT_NAME}_lib
-)
-
-target_compile_features(${PROJECT_NAME}_lib PUBLIC cxx_std_17)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-set_target_properties(${PROJECT_NAME}_lib PROPERTIES
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS ON
 )
+
 
 if(WITH_TESTS)
     include(FetchContent)
@@ -53,9 +43,6 @@ if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE
         /W4
     )
-    target_compile_options(${PROJECT_NAME}_lib PRIVATE
-        /W4
-    )
     if(BUILDING_TESTS)
         target_compile_options(${PROJECT_NAME}_test PRIVATE
             /W4
@@ -63,9 +50,6 @@ if (MSVC)
     endif()
 else ()
     target_compile_options(${PROJECT_NAME} PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    target_compile_options(${PROJECT_NAME}_lib PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     if(BUILDING_TESTS)
