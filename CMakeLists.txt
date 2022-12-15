@@ -3,32 +3,38 @@ cmake_minimum_required(VERSION 3.12)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
-#set(PROJECT_NAME )
 
-project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
+project( VERSION ${PROJECT_VESRION})
 
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-add_library(${PROJECT_NAME}_lib src/.cpp)
+set(HasLib OFF)
+
+if(HasLib)
+    add_library(${PROJECT_NAME}_lib src/.cpp)  
 
 
-target_include_directories(${PROJECT_NAME}_lib
-    PRIVATE "${CMAKE_BINARY_DIR}"
-)
+    target_include_directories(${PROJECT_NAME}_lib
+        PRIVATE "${CMAKE_BINARY_DIR}"
+    )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${PROJECT_NAME}_lib
-)
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        ${PROJECT_NAME}_lib
+    )
 
-target_compile_features(${PROJECT_NAME}_lib PUBLIC cxx_std_17)
+    target_compile_features(${PROJECT_NAME}_lib PUBLIC cxx_std_17)
+
+    set_target_properties(${PROJECT_NAME}_lib PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS ON
+    )
+endif()
+
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-set_target_properties(${PROJECT_NAME}_lib PROPERTIES
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS ON
-)
+set(WITH_TESTS ON)
 
 if(WITH_TESTS)
     include(FetchContent)
@@ -40,13 +46,17 @@ if(WITH_TESTS)
     FetchContent_MakeAvailable(googletest)
 
     
-    add_executable(${PROJECT_NAME}_test  tests/split.cpp tests/ipAddress.cpp tests/sort.cpp  tests/filters.cpp)
-    target_compile_features(${PROJECT_NAME}_test PUBLIC cxx_std_17)
-    target_link_libraries(${PROJECT_NAME}_test GTest::gtest_main ${PROJECT_NAME})
-    target_include_directories(${PROJECT_NAME}_test PRIVATE include)
+    add_executable(test  tests/integer.cpp tests/containers.cpp tests/strings.cpp)
+    target_compile_features(test PUBLIC cxx_std_17)
+    if(HasLib)
+        target_link_libraries(test GTest::gtest_main ${PROJECT_NAME}_lib)
+    else()
+        target_link_libraries(test GTest::gtest_main)
+    endif()
+    target_include_directories(test PRIVATE include)
 
     include(GoogleTest)
-    gtest_discover_tests(${PROJECT_NAME}_test)
+    gtest_discover_tests(test)
 endif()
 
 if (MSVC)
@@ -65,9 +75,11 @@ else ()
     target_compile_options(${PROJECT_NAME} PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
-    target_compile_options(${PROJECT_NAME}_lib PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
+    if(HasLib)
+        target_compile_options(${PROJECT_NAME}_lib PRIVATE
+            -Wall -Wextra -pedantic -Werror
+        )
+    endif()
     if(BUILDING_TESTS)
         target_compile_options(${PROJECT_NAME}_test PRIVATE
             -Wall -Wextra -pedantic -Werror
