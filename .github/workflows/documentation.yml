@@ -5,7 +5,7 @@ name: Documentation
 on:
   push:
     branches: 
-      - hw-*
+      - hw-6
 
 jobs:
   build-documentation:

@@ -3,7 +3,7 @@ name: 'C++ CI'
 on:
   push:
     branches:
-      - hw-*
+      - hw-6
 
 jobs:
   build-ubuntu:
@@ -22,8 +22,8 @@ jobs:
         run: ./build.sh ${{ github.run_number }} OFF package
       - name: Execute program on linux
         run: |
-          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/******-0.0.${{ github.run_number }}-Linux.deb
-          ***** 
+          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/Matrix-0.0.${{ github.run_number }}-Linux.deb
+          Matrix
       - name: Release
         uses: softprops/action-gh-release@v1
         with:

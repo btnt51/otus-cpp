@@ -4,7 +4,7 @@ set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 
-project( VERSION ${PROJECT_VESRION})
+project(Matrix VERSION ${PROJECT_VESRION})
 
 
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -46,7 +46,7 @@ if(WITH_TESTS)
     FetchContent_MakeAvailable(googletest)
 
     
-    add_executable(test  tests/integer.cpp tests/containers.cpp tests/strings.cpp)
+    add_executable(test  tests/matrixSize.cpp tests/matrixElementValue.cpp)
     target_compile_features(test PUBLIC cxx_std_17)
     if(HasLib)
         target_link_libraries(test GTest::gtest_main ${PROJECT_NAME}_lib)
