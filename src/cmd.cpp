@@ -6,11 +6,6 @@ CMD::CMD(int amountOfBlocks) {
     this->m_lastOutput = 0;
 }
 
-CMD::~CMD(){
-
-}
-
-
 void CMD::takeConsoleControl() {
     std::string command;
     int k = 1;
