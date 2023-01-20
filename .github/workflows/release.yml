@@ -21,8 +21,7 @@ jobs:
       - name: Execute program on linux
         run: |
           sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/bulk-0.0.${{ github.run_number }}-Linux.deb
-          bulk 1
-          " "
+          bulk
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
