@@ -31,7 +31,7 @@ public:
 
 private:
     std::size_t m_lastOutput;
-    std::__1::chrono::system_clock::time_point m_firstMessageTime;
+    std::chrono::system_clock::time_point m_firstMessageTime;
     std::vector<std::string> m_commands;
     int m_amountOfBlocks;
 
