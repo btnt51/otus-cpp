@@ -3,16 +3,20 @@ cmake_minimum_required(VERSION 3.12)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
+set(PROJECT_NAME bulk)
 
-project( VERSION ${PROJECT_VESRION})
+project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
+
 
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-set(HasLib OFF)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
+
+set(HasLib ON)
 
 if(HasLib)
-    add_library(${PROJECT_NAME}_lib src/.cpp)  
+    add_library(${PROJECT_NAME}_lib src/cmd.cpp)  
 
 
     target_include_directories(${PROJECT_NAME}_lib
@@ -22,6 +26,8 @@ if(HasLib)
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${PROJECT_NAME}_lib
     )
+
+    target_include_directories(${PROJECT_NAME}_lib PUBLIC include)
 
     target_compile_features(${PROJECT_NAME}_lib PUBLIC cxx_std_17)
 
@@ -34,7 +40,7 @@ endif()
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-set(WITH_TESTS ON)
+#set(WITH_TESTS ON)
 
 if(WITH_TESTS)
     include(FetchContent)
@@ -53,6 +59,7 @@ if(WITH_TESTS)
     else()
         target_link_libraries(test GTest::gtest_main)
     endif()
+
     target_include_directories(test PRIVATE include)
 
     include(GoogleTest)
