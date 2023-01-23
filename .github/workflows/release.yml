@@ -14,6 +14,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
+      - name: Download boost
+        run: |
+          sudo apt update
+          sudo apt install libboost-all-dev
       - name: Prepare build.sh
         run: chmod +x build.sh
       - name: Test

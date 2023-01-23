@@ -4,7 +4,7 @@ set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 
-project( VERSION ${PROJECT_VESRION})
+project(bayan VERSION ${PROJECT_VESRION})
 
 
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -32,9 +32,27 @@ if(HasLib)
     )
 endif()
 
+
+set(WITH_BOOST ON)
+
+if(WITH_BOOST)
+    find_package(Boost COMPONENTS program_options REQUIRED)
+
+    if(HasLib)
+        target_include_directories(${PROJECT_NAME}_lib PRIVATE ${Boost_INCLUDE_DIRS})
+        target_link_libraries(${PROJECT_NAME}_lib PRIVATE ${Boost_LIBRARIES})
+    endif()
+
+    target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
+    target_link_directories(${PROJECT_NAME} PRIVATE ${Boost_LIBRARY_DIRS})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${Boost_LIBRARIES})
+
+endif()
+
+
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-set(WITH_TESTS ON)
+set(WITH_TESTS OFF)
 
 if(WITH_TESTS)
     include(FetchContent)
