@@ -36,7 +36,9 @@ endif()
 set(WITH_BOOST ON)
 
 if(WITH_BOOST)
-    find_package(Boost COMPONENTS program_options REQUIRED)
+    if(NOT GITHUBACTIONS)
+        find_package(Boost COMPONENTS program_options REQUIRED)   
+    endif()
 
     if(HasLib)
         target_include_directories(${PROJECT_NAME}_lib PRIVATE ${Boost_INCLUDE_DIRS})
