@@ -1,0 +1,6 @@
+#ifndef COMPARATOR_HPP
+#define COMPARATOR_HPP
+
+
+
+#endif //COMPARATOR_HPP 

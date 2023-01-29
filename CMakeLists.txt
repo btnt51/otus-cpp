@@ -37,7 +37,7 @@ set(WITH_BOOST ON)
 
 if(WITH_BOOST)
     if(NOT GITHUBACTIONS)
-        find_package(Boost COMPONENTS program_options REQUIRED)   
+        find_package(Boost COMPONENTS program_options filesystem REQUIRED)   
     endif()
 
     if(HasLib)
