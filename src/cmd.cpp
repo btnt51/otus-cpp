@@ -3,7 +3,6 @@
 
 CMD::CMD(int amountOfBlocks) {
     this->m_amountOfBlocks = amountOfBlocks;
-    this->m_lastOutput = 0;
 }
 
 void CMD::takeConsoleControl() {
@@ -12,14 +11,14 @@ void CMD::takeConsoleControl() {
 
     bool isDynamicBlock = false;
     bool isSecondDynmicBlock = false;
+    commandsContext msg;
     while(std::getline(std::cin, command)) {
         if(command == "" || command == " ")
             break;
 
         if(command == "{" && !isDynamicBlock) {
-            if(this->m_commands.size() > 0 && k > 1) {
-                this->printCommands();
-                this->saveToLog();
+            if(msg.m_commands.size() > 0 && k > 1) {
+                this->sendMessage(msg);
                 k = 1;
             }
             isDynamicBlock = true;
@@ -32,8 +31,7 @@ void CMD::takeConsoleControl() {
             isSecondDynmicBlock = false;
             continue;
         } else if(command == "}" && isDynamicBlock && !isSecondDynmicBlock) {
-            this->printCommands();
-            this->saveToLog();
+            this->sendMessage(msg);
             isDynamicBlock = false;
         }
 
@@ -44,13 +42,12 @@ void CMD::takeConsoleControl() {
             continue; 
 
         if(k == 1)
-            m_firstMessageTime = std::chrono::system_clock::now();
+            msg.m_firstMessageTime = std::chrono::system_clock::now();
 
-        this->m_commands.push_back(command);
-
-        if(k == this->m_amountOfBlocks && !isDynamicBlock) {
-            this->printCommands();
-            this->saveToLog();
+        msg.m_commands.push_back(command);
+        if(k == this->m_amountOfBlocks && !isDynamicBlock) {          
+            this->sendMessage(msg);
+            msg.m_commands.clear();
             k = 1;
         } else if(k < this->m_amountOfBlocks && !isDynamicBlock) {
             k++;
@@ -58,26 +55,58 @@ void CMD::takeConsoleControl() {
     }
 }
 
-
-void CMD::printCommands() {
-    std::cout << "bulk: ";
-    std::size_t i = 0;
-    for(auto const &el : this->m_commands) {
-        std::cout << el;
-        if(i < this->m_commands.size() - 1)
-            std::cout << ", ";
-        i++;
+void CMD::sendMessage(commandsContext& msg) {
+    subscribersListPtr psubscriberList;
+    {
+        std::lock_guard<std::mutex> lock(this->m_lock);
+        if(!this->mp_subscriberList) {
+            return;
+        }
+        psubscriberList = this->mp_subscriberList;
     }
-    std::cout << std::endl;
+    for(std::size_t i = 0; i < psubscriberList->size(); ++i) {
+        (*psubscriberList)[i]->getISubscriber()->messageHandler(msg);
+    }
 }
 
+SubscriberId CMD::subscribe(std::shared_ptr<ISubscriber> pNewSubscriber) {
+    subscribersListPtr pNewSubscriberList(new subscribersList());
+    std::lock_guard<std::mutex> lock(this->m_lock);
 
-void CMD::saveToLog() {
-    auto tp_sec = std::chrono::time_point_cast<std::chrono::seconds>(m_firstMessageTime);
-    auto tt = std::chrono::system_clock::to_time_t (tp_sec);
-    std::ofstream logFile("blink" + std::to_string(tt) + ".log", std::ios_base::app);
-    for(auto const & el : this->m_commands) {
-        logFile << el << std::endl;
+    if(this->mp_subscriberList) {
+        pNewSubscriberList->assign(this->mp_subscriberList->begin(), this->mp_subscriberList->end());
     }
-    m_commands.clear();
+    for(std::size_t i = 0; i < pNewSubscriberList->size(); ++i) {
+        pISubscriberItem pSubscriberItem = (*pNewSubscriberList)[i];
+        if(pSubscriberItem->getISubscriber()->getSubscriberId() == pNewSubscriber->getSubscriberId()) {
+            return 0;
+        }
+    }
+    pNewSubscriberList->push_back(pISubscriberItem(new ISubscriberItem(pNewSubscriber)));
+    this->mp_subscriberList = pNewSubscriberList;
+    return pNewSubscriber->getSubscriberId();
+}
+
+bool CMD::unsubscribe(SubscriberId id) {
+    pISubscriberItem pSubcriberItemToRelease;
+    subscribersListPtr pNewSubcriberList;
+    std::lock_guard<std::mutex> lock(this->m_lock);
+    if(!this->mp_subscriberList) {
+        return false;
+    }
+    pNewSubcriberList = subscribersListPtr(new subscribersList());
+    for(std::size_t i = 0; i < this->mp_subscriberList->size(); ++i) {
+        pISubscriberItem pSubscriberItem = (*this->mp_subscriberList)[i];
+        if(pSubscriberItem->getISubscriber()->getSubscriberId() == id) {
+            pSubcriberItemToRelease = pSubscriberItem;
+        } else {
+            pNewSubcriberList->push_back(pSubscriberItem);
+        }
+    }
+    this->mp_subscriberList = pNewSubcriberList;
+    if(!pSubcriberItemToRelease.get()) {
+        return false;
+    }
+
+    return true;
 }

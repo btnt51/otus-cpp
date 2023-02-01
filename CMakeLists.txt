@@ -16,7 +16,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 set(HasLib ON)
 
 if(HasLib)
-    add_library(${PROJECT_NAME}_lib src/cmd.cpp)  
+    add_library(${PROJECT_NAME}_lib src/cmd.cpp src/logger.cpp src/outputCMD.cpp)  
 
 
     target_include_directories(${PROJECT_NAME}_lib
