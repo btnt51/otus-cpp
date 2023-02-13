@@ -1,12 +1,12 @@
 #include <iostream>
-#include "boost/filesystem.hpp"
+#include <filesystem>
+
 #include "boost/program_options.hpp"
-#include "boost/uuid/uuid.hpp"
-#include "boost/uuid/detail/sha1.hpp"
-#include "boost/crc.hpp"
 
 
-//sha1
+#include "File.hpp"
+
+/* //sha1
 //crc32
 
 std::string get_sha1(const std::string& p_arg) {
@@ -30,10 +30,11 @@ uint32_t GetCrc32(const std::string& my_string) {
     boost::crc_32_type result;
     result.process_bytes(my_string.data(), my_string.length());
     return result.checksum();
-}
+} */
 
 namespace po = boost::program_options;
-namespace fs = boost::filesystem;
+/* namespace fs = boost::filesystem;
+namespace sfs = std::filesystem; */
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char ** argv) {
 	try {
@@ -62,49 +63,56 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char ** argv) {
             ("hash,H", po::value<std::string>(&hash_type)->default_value("SHA1"), 
             "Выбреите алгоритм хэш-функции: SHA1, CRC32");
 
+
+
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
         po::notify(vm);
         if(vm.count("help")) {
             std::cout << desc << std::endl;
         }
+        File file(5, "text.txt");
+        File file1(5, "text1.txt");
 
-        if(vm.count("scanDir")) {
+        std::cout << (File::compareFiles(file, file1, hash_type) ? "Both files are same" : "Files are not equal") << std::endl;
+        
+        /* if(vm.count("scanDir")) {
             std::cout << vm["scanDir"].as<std::vector<std::string> >()[0] << std::endl;
-            fs::directory_iterator begin(vm["scanDir"].as<std::vector<std::string> >()[0]);
-            fs::directory_iterator end; 
+            sfs::directory_iterator begin(vm["scanDir"].as<std::vector<std::string> >()[0]);
+            sfs::directory_iterator end; 
             for (; begin != end; ++ begin) {
-                fs::file_status fs = fs::status(*begin);
+                sfs::file_status fs = sfs::status(*begin);
                 switch (fs.type()) {
-                    case boost::filesystem::regular_file: 
+                    case sfs::file_type::regular: 
                         std::cout << "FILE ";
                         break;
-                    case boost::filesystem::symlink_file: 
+                    case sfs::file_type::symlink: 
                         std::cout << "SYMLINK ";
                         break;
-                    case boost::filesystem::directory_file: 
+                    case sfs::file_type::directory: 
                         std::cout << "DIRECTORY ";
                         break;
                     default: 
                         std::cout << "OTHER ";
                         break;
                     }
-                    if (fs.permissions() & boost::filesystem::owner_write) {
+                    bool t = (sfs::perms::owner_write & fs.permissions()) != sfs::perms::none;
+                    if (t) {
                         std::cout << "W ";
                     } else {
                         std::cout << " ";
                     }
-                    std::cout << *begin << '\n';
+                    std::cout << begin->path() << " size: " << ? begin->file_size() <<'\n';
                 }
-            }
+        } */
     
 
-        if(vm["hash"].as<std::string>() == "SHA!") {
+/*         if(vm["hash"].as<std::string>() == "SHA!") {
             std::cout << get_sha1("text") << '\n';
         } else {
             std::cout << GetCrc32("text") << '\n';
         }
-
+ */
 		/* if (argc < 2) {
       		std::cerr << "Call: " << *argv << " STR\n";
       		return 1;

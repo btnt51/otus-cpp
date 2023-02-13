@@ -9,14 +9,14 @@ project(bayan VERSION ${PROJECT_VESRION})
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-set(HasLib OFF)
+set(HasLib ON)
 
 if(HasLib)
-    add_library(${PROJECT_NAME}_lib src/.cpp)  
+    add_library(${PROJECT_NAME}_lib src/File.cpp)  
 
 
     target_include_directories(${PROJECT_NAME}_lib
-        PRIVATE "${CMAKE_BINARY_DIR}"
+        PRIVATE "./include"
     )
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -31,6 +31,10 @@ if(HasLib)
         CXX_EXTENSIONS ON
     )
 endif()
+
+target_include_directories(${PROJECT_NAME}
+        PRIVATE "./include"
+    )
 
 
 set(WITH_BOOST ON)
