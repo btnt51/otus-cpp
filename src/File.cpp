@@ -47,10 +47,14 @@ bool File::compareFiles(File a, File b, std::string hash) {
     while(!a.getIsEof() && !b.getIsEof()) {
         if(a.mv_hashArray[k] != b.mv_hashArray[k])
             return false;
-        if(!a.readBlock(hash))
-            break;
-        if(!b.readBlock(hash))
-            break;
+        if(a.mv_hashArray.size() == k) {
+            if(!a.readBlock(hash))
+                break;
+        }
+        if(b.mv_hashArray.size() == k) {
+            if(!b.readBlock(hash))
+                break;
+        }
         std::cout << ++k << std::endl;
     }
     if(a.mv_hashArray.size() != b.mv_hashArray.size())
