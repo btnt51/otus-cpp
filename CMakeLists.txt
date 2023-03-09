@@ -41,7 +41,7 @@ target_include_directories(${PROJECT_NAME}
 set(WITH_BOOST ON)
 
 if(WITH_BOOST)
-    set(Boost_USE_STATIC_LIBS   ON)
+    set(Boost_USE_STATIC_LIBS ON)
     if(NOT GITHUBACTIONS)
         find_package(Boost COMPONENTS program_options REQUIRED)   
     endif()
