@@ -44,7 +44,7 @@ jobs:
       - name: Execute program on linux
         run: |
           sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/bayan-0.0.${{ github.run_number }}-Linux.deb
-          bayan --scanDir /home/runner/work/otus-cpp/otus-cpp/build --excludeDir /home/runner/work/otus-cpp/otus-cpp/build/tests/data --depth=10    
+          bayan --scanDir /home/runner/work/otus-cpp/otus-cpp/build --excludeDir /home/runner/work/otus-cpp/otus-cpp/build/tests/data --depth=10
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
