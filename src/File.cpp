@@ -1,17 +1,13 @@
 #include "File.hpp"
 
 
-#include <iostream>
 
-std::string getSHA1(const std::string& p_arg) {
+auto getSHA1(const std::string& p_arg)->std::string {
     boost::uuids::detail::sha1 sha1;
     sha1.process_bytes(p_arg.data(), p_arg.size());
     unsigned hash[5] = {0};
     sha1.get_digest(hash);
-
-    // Back to string
     char buf[41] = {0};
-
     for (int i = 0; i < 5; i++)
     {
         std::snprintf(buf + (i << 3), 40, "%08x", hash[i]);
@@ -21,7 +17,7 @@ std::string getSHA1(const std::string& p_arg) {
 }
 
 
-std::string getCRC32(const std::string& my_string) {
+auto getCRC32(const std::string& my_string)->std::string {
     boost::crc_32_type result;
     result.process_bytes(my_string.data(), my_string.length());
     std::stringstream ss;
@@ -30,51 +26,73 @@ std::string getCRC32(const std::string& my_string) {
 }
 
 
-File::File(short blocksize, std::filesystem::path pathToFile) :
-    m_blockSize(blocksize) {
+File::File(fs::path pathToFile, short blocksize) :
+    m_blockSize(blocksize), pathToFile(pathToFile) {
     isEof = false;
-    this->mp_file = std::make_shared<std::ifstream>(pathToFile, std::ios::in|std::ios::binary);
-    this->mp_file->seekg(0);
+    this->mp_file = std::make_shared<std::ifstream>(pathToFile, std::ios_base::in|std::ios_base::binary);
+    int zero  = 0;
+    this->mp_file->seekg(zero);
 }
 
 
-bool File::compareFiles(File a, File b, std::string hash) {
-    if(a.mv_hashArray.empty())
-        a.readBlock(hash);
-    if(b.mv_hashArray.empty())
-        b.readBlock(hash);
-    int k = 0;
-    while(!a.getIsEof() && !b.getIsEof()) {
-        if(a.mv_hashArray[k] != b.mv_hashArray[k])
+bool File::compareFiles(File &a, File &b, std::string hash) {
+    if(a.mv_hashArray.size() == 0)
+        if(!a.readBlock(hash))
             return false;
-        if(a.mv_hashArray.size() == k) {
-            if(!a.readBlock(hash))
+    if(b.mv_hashArray.size() == 0)
+        if(!b.readBlock(hash))
+            return false;
+    std::size_t k = 0;
+    bool bO = true;
+    while(bO) {            
+        if(a.mv_hashArray[k] != b.mv_hashArray[k]) {
+            bO = false;
+            return false;
+        }
+        if(!a.isEof){
+            if(!a.readBlock(hash) && k >= a.mv_hashArray.size() )
                 break;
         }
-        if(b.mv_hashArray.size() == k) {
-            if(!b.readBlock(hash))
+        if(!b.isEof) {
+            if(!b.readBlock(hash) && k > b.mv_hashArray.size())
                 break;
         }
-        std::cout << ++k << std::endl;
+        if(a.isEof && k >= a.mv_hashArray.size())
+            break;  
+        if(b.isEof && k >= b.mv_hashArray.size())
+            break;
+        ++k;
     }
-    if(a.mv_hashArray.size() != b.mv_hashArray.size())
+    if(a.mv_hashArray.size() != b.mv_hashArray.size()) {
         return false;
+    }
     return true;
 }
 
 bool File::readBlock(std::string hash) {
-    if(mp_file->peek() == EOF) {
+    if(fs::is_empty(pathToFile)) {
         this->isEof = true;
+        this->mp_file->close();
         return false;
     }
+
+    if(mp_file->peek() == std::istream::traits_type::eof()) {
+        if(mp_file->eof()) {
+            this->isEof = true;
+            this->mp_file->close();
+            return false;
+        }
+    }
+    
     if(this->mp_file->is_open()) {
         std::string block(this->m_blockSize, '\0');
-        mp_file->seekg(mv_hashArray.size()*m_blockSize);
+        std::size_t seek = mv_hashArray.size()*m_blockSize;
+        mp_file->seekg(seek);
         mp_file->read(&block[0], this->m_blockSize);
         if (hash == "SHA1") {
-            mv_hashArray.emplace_back(getSHA1(block));
+            mv_hashArray.emplace_back(getSHA1(std::string(block.begin(), block.end())));
         } else {
-            mv_hashArray.emplace_back(getCRC32(block));
+            mv_hashArray.emplace_back(getCRC32(std::string(block.begin(), block.end())));
         }
         
         return true;

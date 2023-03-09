@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
-
+set(CMAKE_CXX_STANDARD 17)
 
 project(bayan VERSION ${PROJECT_VESRION})
 
@@ -12,7 +12,8 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 set(HasLib ON)
 
 if(HasLib)
-    add_library(${PROJECT_NAME}_lib src/File.cpp)  
+    add_library(${PROJECT_NAME}_lib src/File.cpp src/Filter.cpp 
+    src/Mask.cpp src/Scanner.cpp src/options.cpp)  
 
 
     target_include_directories(${PROJECT_NAME}_lib
@@ -34,14 +35,14 @@ endif()
 
 target_include_directories(${PROJECT_NAME}
         PRIVATE "./include"
-    )
+)
 
 
 set(WITH_BOOST ON)
 
 if(WITH_BOOST)
     if(NOT GITHUBACTIONS)
-        find_package(Boost COMPONENTS program_options filesystem REQUIRED)   
+        find_package(Boost COMPONENTS program_options REQUIRED)   
     endif()
 
     if(HasLib)
@@ -58,7 +59,7 @@ endif()
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-set(WITH_TESTS OFF)
+#set(WITH_TESTS OFF)
 
 if(WITH_TESTS)
     include(FetchContent)
@@ -70,8 +71,12 @@ if(WITH_TESTS)
     FetchContent_MakeAvailable(googletest)
 
     
-    add_executable(test  tests/integer.cpp tests/containers.cpp tests/strings.cpp)
+    add_executable(test tests/compareTest.cpp tests/filterTest.cpp tests/scannerTest.cpp)
     target_compile_features(test PUBLIC cxx_std_17)
+    If(WITH_BOOST)
+        target_include_directories(test PRIVATE ${Boost_INCLUDE_DIRS})
+        target_link_libraries(test ${Boost_LIBRARIES})
+    endif()
     if(HasLib)
         target_link_libraries(test GTest::gtest_main ${PROJECT_NAME}_lib)
     else()
@@ -81,6 +86,10 @@ if(WITH_TESTS)
 
     include(GoogleTest)
     gtest_discover_tests(test)
+
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/tests)
+
 endif()
 
 if (MSVC)
@@ -91,24 +100,41 @@ if (MSVC)
         /W4
     )
     if(BUILDING_TESTS)
-        target_compile_options(${PROJECT_NAME}_test PRIVATE
+        target_compile_options(test PRIVATE
             /W4
         )
     endif()
-else ()
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    if(HasLib)
-        target_compile_options(${PROJECT_NAME}_lib PRIVATE
+else()
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        target_compile_options(${PROJECT_NAME} PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
-    endif()
-    if(BUILDING_TESTS)
-        target_compile_options(${PROJECT_NAME}_test PRIVATE
+        if(HasLib)
+            target_compile_options(${PROJECT_NAME}_lib PRIVATE
+                -Wall -Wextra -pedantic -Werror
+            )
+        endif()
+        if(BUILDING_TESTS)
+            target_compile_options(test PRIVATE
+                -Wall -Wextra -pedantic -Werror
+            )
+        endif()
+    else()
+        target_compile_options(${PROJECT_NAME} PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
+        if(HasLib)
+            target_compile_options(${PROJECT_NAME}_lib PRIVATE
+                -Wall -Wextra -pedantic -Werror
+            )
+        endif()
+        if(BUILDING_TESTS)
+            target_compile_options(test PRIVATE
+                -Wall -Wextra -pedantic -Werror
+            )
+        endif()
     endif()
+
 endif()
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
