@@ -33,14 +33,14 @@ jobs:
           #  BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
       - name: Prepare build.sh
         run: chmod +x build.sh
-      #- name: Test
-      #  run: ./build.sh ${{ github.run_number }} ON bayan_test
+      - name: Test
+        run: ./build.sh ${{ github.run_number }} ON test
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package ${{steps.install-boost.outputs.BOOST_ROOT}}/include ${{steps.install-boost.outputs.BOOST_ROOT}}/lib ${{ steps.install-boost.outputs.BOOST_ROOT }}
       - name: Execute program on linux
         run: |
           sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/bayan-0.0.${{ github.run_number }}-Linux.deb
-          bayan test 
+          ./bayan --scanDir /home/runner/work/otus-cpp/otus-cpp/build --excludeDir /home/runner/work/otus-cpp/otus-cpp/ build/tests/data --depth=10    
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
