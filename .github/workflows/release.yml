@@ -37,7 +37,8 @@ jobs:
       - name: Test
         run: |
           ./build.sh ${{ github.run_number }} ON test ${{steps.install-boost.outputs.BOOST_ROOT}}/include ${{steps.install-boost.outputs.BOOST_ROOT}}/lib ${{ steps.install-boost.outputs.BOOST_ROOT }}
-          ./build/test
+          cd build
+          ./test
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package ${{steps.install-boost.outputs.BOOST_ROOT}}/include ${{steps.install-boost.outputs.BOOST_ROOT}}/lib ${{ steps.install-boost.outputs.BOOST_ROOT }}
       - name: Execute program on linux
@@ -78,7 +79,8 @@ jobs:
       - name: Test
         run: |
           ./build.sh ${{ github.run_number }} ON test ${{steps.install-boost.outputs.BOOST_ROOT}}/include ${{steps.install-boost.outputs.BOOST_ROOT}}/lib ${{ steps.install-boost.outputs.BOOST_ROOT }}
-          test
+          cd build
+          ./test
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package ${{steps.install-boost.outputs.BOOST_ROOT}}/include ${{steps.install-boost.outputs.BOOST_ROOT}}/lib ${{ steps.install-boost.outputs.BOOST_ROOT }}
       - name: Release
