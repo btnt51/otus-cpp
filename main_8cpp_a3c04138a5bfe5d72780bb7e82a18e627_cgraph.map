@@ -1,0 +1,6 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,56,56"/>
+<area shape="rect" id="node2" href="$classDuplicateScanner.html#a7f42ba0e3db4c50b554a9223539cf582" title="checking files for duplicates" alt="" coords="104,5,297,31"/>
+<area shape="rect" id="node4" href="$classFileScanner.html#a90b3e00d19b1275cd851bff8aeec65c9" title="validate pathes with with special filters" alt="" coords="109,55,292,80"/>
+<area shape="rect" id="node3" href="$classFile.html#a82c310da73633b3a9209bdb3e93093ff" title="static function for comparing 2 files" alt="" coords="345,5,472,31"/>
+</map>
