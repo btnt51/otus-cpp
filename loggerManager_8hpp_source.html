@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>OTUS Homework: include/LoggerManager.hpp Source File</title>
+<title>OTUS Homework: include/loggerManager.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -74,10 +74,10 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">LoggerManager.hpp</div></div>
+  <div class="headertitle"><div class="title">loggerManager.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="LoggerManager_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<a href="loggerManager_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#ifndef LOGGER_HPP</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#define LOGGER_HPP</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
@@ -91,7 +91,7 @@ $(function() {
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="subscriber_8hpp.html">subscriber.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">void</span> <a class="code hl_function" href="LoggerManager_8hpp.html#a0ac41bc8682261926261a3d0eaad8a7b">pasteInFile</a>(<a class="code hl_struct" href="structcommandsContext.html">commandsContext</a> context, <span class="keywordtype">long</span> <span class="keywordtype">long</span> t);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">void</span> <a class="code hl_function" href="loggerManager_8hpp.html#a0ac41bc8682261926261a3d0eaad8a7b">pasteInFile</a>(<a class="code hl_struct" href="structcommandsContext.html">commandsContext</a> context, <span class="keywordtype">long</span> <span class="keywordtype">long</span> t);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
@@ -109,13 +109,13 @@ $(function() {
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif </span><span class="comment">//LOGGER_HPP</span></div>
-<div class="ttc" id="aLoggerManager_8hpp_html_a0ac41bc8682261926261a3d0eaad8a7b"><div class="ttname"><a href="LoggerManager_8hpp.html#a0ac41bc8682261926261a3d0eaad8a7b">pasteInFile</a></div><div class="ttdeci">void pasteInFile(commandsContext context, long long t)</div><div class="ttdoc">function that logs messages in files</div><div class="ttdef"><b>Definition:</b> loggerManager.cpp:10</div></div>
 <div class="ttc" id="aclassISubscriber_html"><div class="ttname"><a href="classISubscriber.html">ISubscriber</a></div><div class="ttdoc">class that provides interface for subscribers.</div><div class="ttdef"><b>Definition:</b> subscriber.hpp:39</div></div>
-<div class="ttc" id="aclassLoggerManager_html"><div class="ttname"><a href="classLoggerManager.html">LoggerManager</a></div><div class="ttdoc">class subscriber LoggerManager that runs function pasteInFile in async mode via std::async</div><div class="ttdef"><b>Definition:</b> LoggerManager.hpp:37</div></div>
+<div class="ttc" id="aclassLoggerManager_html"><div class="ttname"><a href="classLoggerManager.html">LoggerManager</a></div><div class="ttdoc">class subscriber LoggerManager that runs function pasteInFile in async mode via std::async</div><div class="ttdef"><b>Definition:</b> loggerManager.hpp:37</div></div>
 <div class="ttc" id="aclassLoggerManager_html_a0f16d1417c428d37242428ef875397ec"><div class="ttname"><a href="classLoggerManager.html#a0f16d1417c428d37242428ef875397ec">LoggerManager::messageHandler</a></div><div class="ttdeci">virtual void messageHandler(commandsContext &amp;context)</div><div class="ttdoc">message handler that runs pasteInFile via std::async</div><div class="ttdef"><b>Definition:</b> loggerManager.cpp:45</div></div>
-<div class="ttc" id="aclassLoggerManager_html_a42c05e1806a2b1778b6d64bc33eab2f4"><div class="ttname"><a href="classLoggerManager.html#a42c05e1806a2b1778b6d64bc33eab2f4">LoggerManager::t</a></div><div class="ttdeci">static long long t</div><div class="ttdef"><b>Definition:</b> LoggerManager.hpp:59</div></div>
-<div class="ttc" id="aclassLoggerManager_html_a5977346deb753d039dc1558d71e32b05"><div class="ttname"><a href="classLoggerManager.html#a5977346deb753d039dc1558d71e32b05">LoggerManager::unsubscribeHandler</a></div><div class="ttdeci">virtual void unsubscribeHandler()</div><div class="ttdoc">clear unsubscriber from Dispatcher</div><div class="ttdef"><b>Definition:</b> LoggerManager.hpp:56</div></div>
-<div class="ttc" id="aclassLoggerManager_html_a76aa9e2191e3120990a550e064b2c691"><div class="ttname"><a href="classLoggerManager.html#a76aa9e2191e3120990a550e064b2c691">LoggerManager::LoggerManager</a></div><div class="ttdeci">LoggerManager()</div><div class="ttdoc">Construct a new Logger Manager object.</div><div class="ttdef"><b>Definition:</b> LoggerManager.hpp:43</div></div>
+<div class="ttc" id="aclassLoggerManager_html_a42c05e1806a2b1778b6d64bc33eab2f4"><div class="ttname"><a href="classLoggerManager.html#a42c05e1806a2b1778b6d64bc33eab2f4">LoggerManager::t</a></div><div class="ttdeci">static long long t</div><div class="ttdef"><b>Definition:</b> loggerManager.hpp:59</div></div>
+<div class="ttc" id="aclassLoggerManager_html_a5977346deb753d039dc1558d71e32b05"><div class="ttname"><a href="classLoggerManager.html#a5977346deb753d039dc1558d71e32b05">LoggerManager::unsubscribeHandler</a></div><div class="ttdeci">virtual void unsubscribeHandler()</div><div class="ttdoc">clear unsubscriber from Dispatcher</div><div class="ttdef"><b>Definition:</b> loggerManager.hpp:56</div></div>
+<div class="ttc" id="aclassLoggerManager_html_a76aa9e2191e3120990a550e064b2c691"><div class="ttname"><a href="classLoggerManager.html#a76aa9e2191e3120990a550e064b2c691">LoggerManager::LoggerManager</a></div><div class="ttdeci">LoggerManager()</div><div class="ttdoc">Construct a new Logger Manager object.</div><div class="ttdef"><b>Definition:</b> loggerManager.hpp:43</div></div>
+<div class="ttc" id="aloggerManager_8hpp_html_a0ac41bc8682261926261a3d0eaad8a7b"><div class="ttname"><a href="loggerManager_8hpp.html#a0ac41bc8682261926261a3d0eaad8a7b">pasteInFile</a></div><div class="ttdeci">void pasteInFile(commandsContext context, long long t)</div><div class="ttdoc">function that logs messages in files</div><div class="ttdef"><b>Definition:</b> loggerManager.cpp:10</div></div>
 <div class="ttc" id="astructcommandsContext_html"><div class="ttname"><a href="structcommandsContext.html">commandsContext</a></div><div class="ttdoc">structure that sends as message to subscribers.</div><div class="ttdef"><b>Definition:</b> subscriber.hpp:30</div></div>
 <div class="ttc" id="asubscriber_8hpp_html"><div class="ttname"><a href="subscriber_8hpp.html">subscriber.hpp</a></div><div class="ttdoc">File that contatins commandsContext and interface-class Subscriber for pattern Observer.</div></div>
 </div><!-- fragment --></div><!-- contents -->
