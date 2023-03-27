@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classISubscriber.html" title="class that provides interface for subscribers." alt="" coords="5,31,93,56"/>
+<area shape="rect" id="node2" href="$classLoggerManager.html" title="class subscriber LoggerManager that runs function pasteInFile in async mode via std::async" alt="" coords="141,5,253,31"/>
+<area shape="rect" id="node3" href="$classoutputCMD.html" title="subcriber outputCMD that writes messages to console output via std::cout in async mode" alt="" coords="154,55,241,80"/>
+</map>

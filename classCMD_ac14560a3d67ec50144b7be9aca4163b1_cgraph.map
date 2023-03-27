@@ -1,0 +1,5 @@
+<map id="CMD::inputControlAsync" name="CMD::inputControlAsync">
+<area shape="rect" id="node1" title="taking control over inputted data by const char*" alt="" coords="5,31,168,56"/>
+<area shape="rect" id="node2" href="$classCMD.html#a5d14d06b981c0e6d10e8d73ed3811fd7" title="sends message to subcribers" alt="" coords="216,5,355,31"/>
+<area shape="rect" id="node3" href="$cmd_8cpp.html#a76ce09709f1a3e4fca3626fc77fd1148" title=" " alt="" coords="262,55,309,80"/>
+</map>

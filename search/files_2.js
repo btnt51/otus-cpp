@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['main_2ecpp_0',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mask_2ecpp_1',['Mask.cpp',['../Mask_8cpp.html',1,'']]],
-  ['mask_2ehpp_2',['Mask.hpp',['../Mask_8hpp.html',1,'']]]
+  ['loggermanager_2ecpp_0',['loggerManager.cpp',['../loggerManager_8cpp.html',1,'']]],
+  ['loggermanager_2ehpp_1',['LoggerManager.hpp',['../LoggerManager_8hpp.html',1,'']]]
 ];

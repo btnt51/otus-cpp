@@ -1,0 +1,6 @@
+<map id="async::receive" name="async::receive">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,109,56"/>
+<area shape="rect" id="node2" href="$classCMD.html#ac14560a3d67ec50144b7be9aca4163b1" title="taking control over inputted data by const char*" alt="" coords="157,31,320,56"/>
+<area shape="rect" id="node3" href="$classCMD.html#a5d14d06b981c0e6d10e8d73ed3811fd7" title="sends message to subcribers" alt="" coords="368,5,507,31"/>
+<area shape="rect" id="node4" href="$cmd_8cpp.html#a76ce09709f1a3e4fca3626fc77fd1148" title=" " alt="" coords="414,55,461,80"/>
+</map>

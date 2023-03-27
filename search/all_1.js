@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['checkfiles_0',['checkFiles',['../classDuplicateScanner.html#a7f42ba0e3db4c50b554a9223539cf582',1,'DuplicateScanner']]],
-  ['comparefiles_1',['compareFiles',['../classFile.html#a82c310da73633b3a9209bdb3e93093ff',1,'File']]],
-  ['comparetest_2ecpp_2',['compareTest.cpp',['../compareTest_8cpp.html',1,'']]]
+  ['cmd_0',['CMD',['../classCMD.html',1,'CMD'],['../classCMD.html#abd9158cd31fb5f32d1ca35104fee2e60',1,'CMD::CMD()']]],
+  ['cmd_2ecpp_1',['cmd.cpp',['../cmd_8cpp.html',1,'']]],
+  ['cmd_2ehpp_2',['cmd.hpp',['../cmd_8hpp.html',1,'']]],
+  ['commandscontext_3',['commandsContext',['../structcommandsContext.html',1,'']]],
+  ['connect_4',['connect',['../namespaceasync.html#a003d1a6899dca20ddcbff67a6abfb491',1,'async']]]
 ];

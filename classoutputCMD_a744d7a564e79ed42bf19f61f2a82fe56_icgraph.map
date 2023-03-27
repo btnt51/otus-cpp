@@ -1,0 +1,4 @@
+<map id="outputCMD::testAsync" name="outputCMD::testAsync">
+<area shape="rect" id="node1" title="function for console output with std::cout" alt="" coords="244,5,395,31"/>
+<area shape="rect" id="node2" href="$classoutputCMD.html#abb61e2da57885b1901fd90c4d7d4dd0a" title="run testAsync function for console output in async via std::async" alt="" coords="5,5,196,31"/>
+</map>

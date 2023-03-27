@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blocksize_0',['blockSize',['../classOptions.html#af00a25ec95fc1ecfbd53b2d5a5949a15',1,'Options']]]
+  ['gmutex_0',['gMutex',['../loggerManager_8cpp.html#a28bf8830aa77fa2b039089346aa49008',1,'loggerManager.cpp']]]
 ];

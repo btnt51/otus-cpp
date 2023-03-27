@@ -1,0 +1,5 @@
+<map id="ISubscriber" name="ISubscriber">
+<area shape="rect" id="node1" title="class that provides interface for subscribers." alt="" coords="118,5,326,156"/>
+<area shape="rect" id="node2" href="$classLoggerManager.html" title="class subscriber LoggerManager that runs function pasteInFile in async mode via std::async" alt="" coords="5,211,201,347"/>
+<area shape="rect" id="node3" href="$classoutputCMD.html" title="subcriber outputCMD that writes messages to console output via std::cout in async mode" alt="" coords="225,204,456,355"/>
+</map>

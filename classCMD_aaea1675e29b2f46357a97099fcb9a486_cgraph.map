@@ -1,0 +1,4 @@
+<map id="CMD::takeConsoleControl" name="CMD::takeConsoleControl">
+<area shape="rect" id="node1" title="taking console control" alt="" coords="5,5,176,31"/>
+<area shape="rect" id="node2" href="$classCMD.html#a5d14d06b981c0e6d10e8d73ed3811fd7" title="sends message to subcribers" alt="" coords="224,5,363,31"/>
+</map>

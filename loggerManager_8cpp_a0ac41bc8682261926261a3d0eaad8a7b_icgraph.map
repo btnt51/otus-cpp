@@ -1,0 +1,4 @@
+<map id="pasteInFile" name="pasteInFile">
+<area shape="rect" id="node1" title="function that logs messages in files" alt="" coords="269,5,356,31"/>
+<area shape="rect" id="node2" href="$classLoggerManager.html#a0f16d1417c428d37242428ef875397ec" title="message handler that runs pasteInFile via std::async" alt="" coords="5,5,221,31"/>
+</map>

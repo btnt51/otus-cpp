@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hashalgo_0',['hashAlgo',['../classOptions.html#ac19cfe2dcfcb9e03841fe5afd213869b',1,'Options']]]
+  ['t_0',['t',['../classLoggerManager.html#a42c05e1806a2b1778b6d64bc33eab2f4',1,'LoggerManager']]]
 ];

@@ -1,0 +1,10 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,56,80"/>
+<area shape="rect" id="node2" href="$namespaceasync.html#a003d1a6899dca20ddcbff67a6abfb491" title=" " alt="" coords="113,5,221,31"/>
+<area shape="rect" id="node3" href="$namespaceasync.html#a04233bf9bec326f7bcb4e1a9d5b8ee9d" title=" " alt="" coords="104,55,229,80"/>
+<area shape="rect" id="node5" href="$namespaceasync.html#aa1b54e89e951488a8dd79e720f3d8f8b" title=" " alt="" coords="115,104,219,129"/>
+<area shape="rect" id="node4" href="$classCMD.html#af8af9b283047026367ade464da58131c" title="function that unsubcribe all subcribers from Dispatcher" alt="" coords="295,55,422,80"/>
+<area shape="rect" id="node6" href="$classCMD.html#ac14560a3d67ec50144b7be9aca4163b1" title="taking control over inputted data by const char*" alt="" coords="277,104,440,129"/>
+<area shape="rect" id="node7" href="$classCMD.html#a5d14d06b981c0e6d10e8d73ed3811fd7" title="sends message to subcribers" alt="" coords="488,79,627,104"/>
+<area shape="rect" id="node8" href="$cmd_8cpp.html#a76ce09709f1a3e4fca3626fc77fd1148" title=" " alt="" coords="534,128,581,153"/>
+</map>
