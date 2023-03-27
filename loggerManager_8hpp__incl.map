@@ -1,5 +1,5 @@
 <map id="include/loggerManager.hpp" name="include/loggerManager.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="165,5,341,31"/>
+<area shape="rect" id="node1" title="File that contatins class subscriber LoggerManager and function that logs messages in file in async m..." alt="" coords="165,5,341,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,79,75,104"/>
 <area shape="rect" id="node3" title=" " alt="" coords="99,79,165,104"/>
 <area shape="rect" id="node4" title=" " alt="" coords="129,152,183,177"/>

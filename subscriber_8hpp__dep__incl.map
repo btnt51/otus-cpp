@@ -2,7 +2,7 @@
 <area shape="rect" id="node1" title="File that contatins commandsContext and interface&#45;class Subscriber for pattern Observer." alt="" coords="194,5,345,31"/>
 <area shape="rect" id="node2" href="$cmd_8hpp.html" title="Class that implements Dispatcher in pattern Observer. Created by this article://https://habr...." alt="" coords="41,79,157,104"/>
 <area shape="rect" id="node4" href="$cmd_8cpp.html" title=" " alt="" coords="5,152,99,177"/>
-<area shape="rect" id="node5" href="$loggerManager_8hpp.html" title=" " alt="" coords="181,79,357,104"/>
+<area shape="rect" id="node5" href="$loggerManager_8hpp.html" title="File that contatins class subscriber LoggerManager and function that logs messages in file in async m..." alt="" coords="181,79,357,104"/>
 <area shape="rect" id="node7" href="$outputCMD_8hpp.html" title="File that conatins subcriber outputCMD." alt="" coords="382,79,538,104"/>
 <area shape="rect" id="node8" href="$outputCMD_8cpp.html" title=" " alt="" coords="439,152,572,177"/>
 <area shape="rect" id="node3" href="$async_8cpp.html" title=" " alt="" coords="130,152,233,177"/>
