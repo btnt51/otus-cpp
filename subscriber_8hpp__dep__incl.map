@@ -1,11 +1,10 @@
 <map id="include/subscriber.hpp" name="include/subscriber.hpp">
-<area shape="rect" id="node1" title="File that contatins commandsContext and interface&#45;class Subscriber for pattern Observer." alt="" coords="185,5,335,31"/>
-<area shape="rect" id="node2" href="$LoggerManager_8hpp.html" title="File that contatins class subscriber LoggerManager and function that logs messages in file in async m..." alt="" coords="413,79,595,104"/>
-<area shape="rect" id="node6" href="$cmd_8hpp.html" title="Class that implements Dispatcher in pattern Observer. Created by this article://https://habr...." alt="" coords="42,79,158,104"/>
-<area shape="rect" id="node7" href="$cmd_8cpp.html" title=" " alt="" coords="5,152,99,177"/>
-<area shape="rect" id="node8" href="$outputCMD_8hpp.html" title="File that conatins subcriber outputCMD." alt="" coords="182,79,338,104"/>
-<area shape="rect" id="node9" href="$outputCMD_8cpp.html" title=" " alt="" coords="299,152,432,177"/>
-<area shape="rect" id="node3" href="$async_8cpp.html" title=" " alt="" coords="171,152,274,177"/>
-<area shape="rect" id="node4" href="$loggerManager_8cpp.html" title=" " alt="" coords="577,152,730,177"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title=" " alt="" coords="456,152,552,177"/>
+<area shape="rect" id="node1" title="File that contatins commandsContext and interface&#45;class Subscriber for pattern Observer." alt="" coords="245,5,395,31"/>
+<area shape="rect" id="node2" href="$LoggerManager_8hpp.html" title="File that contatins class subscriber LoggerManager and function that logs messages in file in async m..." alt="" coords="5,79,187,104"/>
+<area shape="rect" id="node4" href="$cmd_8hpp.html" title="Class that implements Dispatcher in pattern Observer. Created by this article://https://habr...." alt="" coords="262,79,378,104"/>
+<area shape="rect" id="node6" href="$cmd_8cpp.html" title=" " alt="" coords="191,152,284,177"/>
+<area shape="rect" id="node7" href="$outputCMD_8hpp.html" title="File that conatins subcriber outputCMD." alt="" coords="402,79,558,104"/>
+<area shape="rect" id="node8" href="$outputCMD_8cpp.html" title=" " alt="" coords="516,152,649,177"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title=" " alt="" coords="48,152,144,177"/>
+<area shape="rect" id="node5" href="$async_8cpp.html" title=" " alt="" coords="362,152,465,177"/>
 </map>
