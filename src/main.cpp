@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "LoggerManager.hpp"
 #include "async.h"
 
 int main([[maybe_unused]] int argv, [[maybe_unused]]char **argc) {

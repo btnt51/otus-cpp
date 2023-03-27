@@ -1,5 +1,5 @@
 /**
- * @file LoggerManager.hpp
+ * @file loggerManager.hpp
  * @author Evgeniy btnt51 (prog@btnt51.ru)
  * @brief File that contatins class subscriber LoggerManager and function that logs messages in file in async mode.
  * @version 0.1
