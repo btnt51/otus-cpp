@@ -3,35 +3,33 @@ cmake_minimum_required(VERSION 3.12)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
-set(PROJECT_NAME bulk)
+set(PROJECT_NAME async)
 
 project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
 
 
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_library(${PROJECT_NAME} src/cmd.cpp src/outputCMD.cpp src/async.cpp src/LoggerManager.cpp )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
-set(HasLib ON)
+set(HasLib OFF)
 
 if(HasLib)
-    add_library(${PROJECT_NAME}_lib src/cmd.cpp src/logger.cpp src/outputCMD.cpp)  
+    add_library(async src/cmd.cpp src/outputCMD.cpp src/async.cpp src/LoggerManager.cpp )  
 
 
-    target_include_directories(${PROJECT_NAME}_lib
+    target_include_directories(async
         PRIVATE "${CMAKE_BINARY_DIR}"
     )
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        ${PROJECT_NAME}_lib
-    )
+    target_link_libraries(${PROJECT_NAME} PRIVATE async)
 
-    target_include_directories(${PROJECT_NAME}_lib PUBLIC include)
+    target_include_directories(async PUBLIC include)
 
-    target_compile_features(${PROJECT_NAME}_lib PUBLIC cxx_std_17)
+    target_compile_features(async PUBLIC cxx_std_17)
 
-    set_target_properties(${PROJECT_NAME}_lib PROPERTIES
+    set_target_properties(async PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS ON
@@ -43,39 +41,22 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 #set(WITH_TESTS ON)
 
 if(WITH_TESTS)
-    include(FetchContent)
-    FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.12.1
-    )
-    FetchContent_MakeAvailable(googletest)
-
-    
-    add_executable(test  tests/integer.cpp tests/containers.cpp tests/strings.cpp)
+    add_executable(test src/main.cpp)
     target_compile_features(test PUBLIC cxx_std_17)
-    if(HasLib)
-        target_link_libraries(test GTest::gtest_main ${PROJECT_NAME}_lib)
-    else()
-        target_link_libraries(test GTest::gtest_main)
-    endif()
+    target_link_libraries(test ${PROJECT_NAME})
 
-    target_include_directories(test PRIVATE include)
-
-    include(GoogleTest)
-    gtest_discover_tests(test)
 endif()
 
 if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE
         /W4
     )
-    target_compile_options(${PROJECT_NAME}_lib PRIVATE
+    target_compile_options(asyncPRIVATE
         /W4
     )
-    if(BUILDING_TESTS)
+    if(WITH_TESTS)
         target_compile_options(${PROJECT_NAME}_test PRIVATE
-            /W4
+            -Wall -Wextra -pedantic -Werror
         )
     endif()
 else ()
@@ -83,25 +64,26 @@ else ()
         -Wall -Wextra -pedantic -Werror
     )
     if(HasLib)
-        target_compile_options(${PROJECT_NAME}_lib PRIVATE
+        target_compile_options(async PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
     endif()
-    if(BUILDING_TESTS)
-        target_compile_options(${PROJECT_NAME}_test PRIVATE
+    if(WITH_TESTS)
+        target_compile_options(test PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
     endif()
 endif()
 
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION /usr/local/lib)
 
 if (APPLE)
     message("Packing for MacOS")
     set(CPACK_GENERATOR DragNDrop)
 elseif (UNIX)
     message("Packing for Debian distros")
-    set(CPACK_GENERATOR DEB)
+    set(CPACK_GENERATOR "DEB")
+    set(CPACK_PACKAGE_NAME "async")
     set(CPACK_PACKAGE_CONTACT evgeniy@btnt51.ru)
 endif ()
 

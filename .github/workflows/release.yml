@@ -16,12 +16,13 @@ jobs:
           submodules: true
       - name: Prepare build.sh
         run: chmod +x build.sh
+      - name: Test
+        run: ./build.sh ${{ github.run_number }} ON test
       - name: Build
         run: ./build.sh ${{ github.run_number }} OFF package
       - name: Execute program on linux
         run: |
-          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/bulk-0.0.${{ github.run_number }}-Linux.deb
-          bulk
+          sudo apt install -y ~/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/release/async-0.0.${{ github.run_number }}-Linux.deb
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
