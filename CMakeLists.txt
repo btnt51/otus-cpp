@@ -9,14 +9,14 @@ project(${PROJECT_NAME} VERSION ${PROJECT_VESRION})
 
 
 
-add_library(${PROJECT_NAME} src/cmd.cpp src/outputCMD.cpp src/async.cpp src/LoggerManager.cpp )
+add_library(${PROJECT_NAME} src/cmd.cpp src/outputCMD.cpp src/async.cpp src/loggerManager.cpp )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 set(HasLib OFF)
 
 if(HasLib)
-    add_library(async src/cmd.cpp src/outputCMD.cpp src/async.cpp src/LoggerManager.cpp )  
+    add_library(async src/cmd.cpp src/outputCMD.cpp src/async.cpp src/loggerManager.cpp )  
 
 
     target_include_directories(async

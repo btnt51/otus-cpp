@@ -1,7 +1,7 @@
 #include "async.h"
 #include "cmd.hpp"
 #include "outputCMD.hpp"
-#include "LoggerManager.hpp"
+#include "loggerManager.hpp"
 #include <cstring>
 #include <future>
 #include <memory>

@@ -1,5 +1,5 @@
 
-#include "LoggerManager.hpp"
+#include "loggerManager.hpp"
 
 
 long long LoggerManager::t = 0;
