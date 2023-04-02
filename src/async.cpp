@@ -16,8 +16,6 @@ namespace async {
         cmd->subscribe(output);
         cmd->subscribe(logInFiles);
         return static_cast<void *>(cmd);
-
-        return nullptr;
     }
 
     void receive(handle_t handle, [[maybe_unused]] const char *data, [[maybe_unused]] std::size_t size) {
@@ -30,6 +28,7 @@ namespace async {
     void disconnect(handle_t handle) {
         auto cmdHandle = static_cast<CMD*>(handle);
         cmdHandle->unsubscribe();
+        delete cmdHandle;
     }
 
 }
